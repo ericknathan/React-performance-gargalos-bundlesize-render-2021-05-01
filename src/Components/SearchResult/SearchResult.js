@@ -10,7 +10,7 @@ export function Menu({
   return (
     <ul {...getMenuProps()}>
       {items.map((item, index) => (
-        <ListItem
+        <MemoizedListItem
           key={item.id}
           item={item}
           index={index}
@@ -18,12 +18,14 @@ export function Menu({
           isSelected={selectedItem?.id === item.id}
           isHighlighted={highlightedIndex === index}
         >
-          <SearchResults name={item.name} />
-        </ListItem>
+          <MemoizedSearchResults name={item.name} />
+        </MemoizedListItem>
       ))}
     </ul>
   );
 }
+
+export const MemoizedMenu = React.memo(Menu);
 
 export function ListItem({
   getItemProps,
@@ -48,6 +50,7 @@ export function ListItem({
   );
 }
 
+export const MemoizedListItem = React.memo(ListItem);
 
 const SearchResults = ({ name }) => {
   return (
@@ -75,3 +78,5 @@ const SearchResults = ({ name }) => {
 };
 
 
+
+const MemoizedSearchResults = React.memo(SearchResults);

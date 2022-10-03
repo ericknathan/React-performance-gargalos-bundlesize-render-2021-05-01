@@ -2,7 +2,7 @@ import React from "react";
 
 import Title from "../Components/Title/Title";
 import SearchBar from "../Components/Search/Search";
-import { Menu } from "../Components/SearchResult/SearchResult";
+import { Menu, MemoizedMenu } from "../Components/SearchResult/SearchResult";
 
 import { useCombobox } from "../Hooks/useCombobox";
 import { getItems } from "../Utils/filterCities";
@@ -13,7 +13,7 @@ function Search() {
 
   const [inputValue, setInputValue] = React.useState("");
 
-  const allItems = getItems(inputValue);
+  const allItems = React.useMemo(() => getItems(inputValue), [inputValue]);
 
   const items = allItems.slice(0, 100);
 
@@ -53,7 +53,7 @@ function Search() {
       </div>
 
       <div className="mt-10">
-        <Menu
+        <MemoizedMenu
           items={items}
           getMenuProps={getMenuProps}
           getItemProps={getItemProps}
